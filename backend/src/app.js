@@ -14,7 +14,9 @@ app.use(helmet());
 app.use(cors({ origin: process.env.CLIENT_URL || "*" }));
 app.use(express.json({ limit: "8mb" }));
 app.use(morgan("dev"));
-
+app.get("/", (req, res) => {
+  res.json({ status: "ok", service: "backend" });
+});
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "backend" });
 });
