@@ -65,7 +65,7 @@ ML service default: `http://localhost:8000`
 ### backend/.env
 
 - `PORT=5000`
-- `MONGO_URI=mongodb://localhost:27017/face_attendance`
+- `MONGO_URI=mongodb+srv://kurakulagowtham54_db_user:Gowtham%404949@cluster0.dcmjp0a.mongodb.net/`
 - `JWT_SECRET=replace_with_secure_secret`
 - `JWT_EXPIRES_IN=1d`
 - `ML_SERVICE_URL=http://localhost:8000`
