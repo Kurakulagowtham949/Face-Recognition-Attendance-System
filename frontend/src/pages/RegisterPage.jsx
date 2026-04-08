@@ -10,18 +10,22 @@ const RegisterPage = () => {
     password: ""
   });
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
+      setIsSubmitting(true);
       const { data } = await api.post("/auth/register", form);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -51,7 +55,9 @@ const RegisterPage = () => {
           required
         />
         {error && <p className="error-text">{error}</p>}
-        <button type="submit">Register</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Creating account..." : "Register"}
+        </button>
         <p>
           Have an account? <Link to="/login">Login</Link>
         </p>

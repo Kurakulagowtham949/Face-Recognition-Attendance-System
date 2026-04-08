@@ -6,18 +6,22 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
+      setIsSubmitting(true);
       const { data } = await api.post("/auth/login", form);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -40,7 +44,9 @@ const LoginPage = () => {
           required
         />
         {error && <p className="error-text">{error}</p>}
-        <button type="submit">Sign in</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Signing in..." : "Sign in"}
+        </button>
         <p>
           No account? <Link to="/register">Register</Link>
         </p>

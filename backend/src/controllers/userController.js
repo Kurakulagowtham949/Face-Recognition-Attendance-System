@@ -13,11 +13,18 @@ export const registerUserFace = async (req, res) => {
   }
 
   const { imageBase64 } = req.body;
-
-  const result = await registerFace({
-    userId: req.user._id.toString(),
-    imageBase64
-  });
+  let result;
+  try {
+    result = await registerFace({
+      userId: req.user._id.toString(),
+      imageBase64
+    });
+  } catch (error) {
+    console.error("ML Service error:", error.message);
+    return res.status(503).json({ 
+      message: "ML Service is currently unavailable. Please try again later." 
+    });
+  }
 
   await User.findByIdAndUpdate(req.user._id, { faceRegistered: true });
 

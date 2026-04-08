@@ -3,10 +3,23 @@
   --bg-2: #d8f0ea;
   --panel: #ffffff;
   --text: #0f172a;
+  --muted: #475569;
   --accent: #0f766e;
   --accent-dark: #115e59;
   --danger: #b91c1c;
   --shadow: 0 15px 30px rgba(15, 118, 110, 0.12);
+}
+
+:root[data-theme="dark"] {
+  --bg-1: #07121f;
+  --bg-2: #102b37;
+  --panel: #10263b;
+  --text: #e2e8f0;
+  --muted: #bfd2e3;
+  --accent: #2dd4bf;
+  --accent-dark: #14b8a6;
+  --danger: #f87171;
+  --shadow: 0 15px 30px rgba(3, 7, 18, 0.45);
 }
 
 * {
@@ -15,10 +28,11 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
   color: var(--text);
   background: radial-gradient(circle at top left, var(--bg-1), var(--bg-2));
   min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -33,16 +47,39 @@ button {
   padding: 0.65rem 1rem;
   font-weight: 700;
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 button:hover {
   background: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 input {
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   padding: 0.7rem 0.8rem;
+  width: 100%;
+}
+
+.muted-text {
+  color: var(--muted);
+}
+
+.secondary-btn {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, #ffffff 45%);
+}
+
+.secondary-btn:hover {
+  background: color-mix(in srgb, var(--accent) 14%, transparent 86%);
 }
 
 .auth-layout {
@@ -66,6 +103,15 @@ input {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+}
+
+.nav-brand h1 {
+  margin: 0;
+}
+
+.nav-brand p {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
 }
 
 .nav-wrap nav {
@@ -102,6 +148,18 @@ input {
   width: min(100%, 420px);
 }
 
+.capture-preview {
+  border-radius: 10px;
+  border: 2px solid #94a3b8;
+  width: min(100%, 420px);
+}
+
+.capture-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .error-text {
   color: var(--danger);
 }
@@ -122,6 +180,20 @@ input {
   overflow-x: auto;
 }
 
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.row-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -132,6 +204,11 @@ td {
   text-align: left;
   padding: 0.65rem;
   border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 700;
 }
 
 @media (max-width: 720px) {

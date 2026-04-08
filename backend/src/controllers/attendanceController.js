@@ -10,7 +10,15 @@ export const markAttendance = async (req, res) => {
   }
 
   const { imageBase64 } = req.body;
-  const recognition = await recognizeFace(imageBase64);
+  let recognition;
+  try {
+    recognition = await recognizeFace(imageBase64);
+  } catch (error) {
+    console.error("ML Service error:", error.message);
+    return res.status(503).json({ 
+      message: "ML Service is currently unavailable. Please try again later." 
+    });
+  }
 
   if (!recognition.matched || !recognition.userId) {
     return res.status(404).json({ message: "Face not recognized" });
